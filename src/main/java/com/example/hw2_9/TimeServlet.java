@@ -1,5 +1,6 @@
 package com.example.hw2_9;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -9,20 +10,16 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.attribute.FileTime;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @WebServlet(name = "time", value = "/time")
 public class TimeServlet extends HttpServlet {
 
     private TemplateEngine engine;
-    private ZonedDateTime/*String*/ message;
+    private ZonedDateTime message;
 
     public void init() {
 
@@ -31,7 +28,7 @@ public class TimeServlet extends HttpServlet {
         engine = new TemplateEngine();
 
         FileTemplateResolver resolver = new FileTemplateResolver();
-        resolver.setPrefix("/opt/tomcat/webapps/testapp/WEB-INF/templates/");
+        resolver.setPrefix(this.getServletContext().getRealPath("/WEB-INF/templates/"));
         resolver.setSuffix(".html");
         resolver.setTemplateMode("HTML5");
         resolver.setOrder(engine.getTemplateResolvers().size());
