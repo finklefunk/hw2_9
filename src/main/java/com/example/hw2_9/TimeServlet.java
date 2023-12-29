@@ -27,7 +27,6 @@ public class TimeServlet extends HttpServlet {
     public void init() {
 
        message = ZonedDateTime.now( ZoneId.of( "UTC" ) );
-                /*.format( DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss z" ) )*/;
 
         engine = new TemplateEngine();
 
@@ -63,14 +62,11 @@ public class TimeServlet extends HttpServlet {
         }
 
         message = ZonedDateTime.now( ZoneId.of( timezoneVar ) );
-
-                /*.format( DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss z" ) )*/
         ;
 
         Context timeResponseContext = new Context(
                 request.getLocale());
                 timeResponseContext.setVariable("message", message);
-                //timeResponseContext.setVariable("formatter", DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss z"));
 
         engine.process("timeRenderTemplate", timeResponseContext, response.getWriter());
         response.getWriter().close();
