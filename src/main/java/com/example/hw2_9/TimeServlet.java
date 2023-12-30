@@ -47,17 +47,22 @@ public class TimeServlet extends HttpServlet {
             response.addCookie(new Cookie("lastTimezone", timezoneVar));
         } else {
             Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if( cookie.getName().equals("lastTimezone")){
-                    timezoneVar = cookie.getValue();
-                    break;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie != null){
+                        if(cookie.getName() != null){
+                            if (cookie.getName().equals("lastTimezone")) {
+                                timezoneVar = cookie.getValue();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             if( timezoneVar == null) {
                 timezoneVar = "UTC";
             }
         }
-
         message = ZonedDateTime.now( ZoneId.of( timezoneVar ) );
         ;
 
